@@ -9,6 +9,12 @@ logger = logging.getLogger(__name__)
 
 load_dotenv(override=True)
 
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    logger.warning("OPENAI_API_KEY is not set in the environment variables.")
+else:
+    logger.info("OPENAI_API_KEY is available in the environment variables.")
+
 app = FastAPI(title="Network Bot API", version="0.1.0")
 app.include_router(router)
 
