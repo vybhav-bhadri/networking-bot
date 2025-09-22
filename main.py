@@ -7,7 +7,9 @@ from views import router
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-load_dotenv(override=True)
+if os.getenv("RAILWAY_ENVIRONMENT") is None:  # Railway sets this automatically
+    from dotenv import load_dotenv
+    load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
