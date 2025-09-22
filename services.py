@@ -19,7 +19,6 @@ class OutreachService:
         logger.info(f"Received user input: {user_input}")
         
         try:
-            # Step 1: Convert user input to detailed outreach request using converter agent
             logger.info("Step 1: Converting user input to detailed outreach request...")
             converter_input_str = json.dumps(user_input, ensure_ascii=False)
             
@@ -29,11 +28,9 @@ class OutreachService:
             if not hasattr(converter_result, 'final_output') or not converter_result.final_output:
                 raise ValueError("Converter agent did not return valid output")
             
-            # Parse converter output
             outreach_request_data = self._parse_agent_output(converter_result.final_output)
             logger.info(f"Converted outreach request: {outreach_request_data}")
             
-            # Step 2: Use network manager to generate the actual outreach
             logger.info("Step 2: Generating outreach using network manager...")
             network_input_str = json.dumps(outreach_request_data, ensure_ascii=False)
             
@@ -43,11 +40,9 @@ class OutreachService:
             if not hasattr(network_result, 'final_output') or not network_result.final_output:
                 raise ValueError("Network manager did not return valid output")
             
-            # Parse network manager output
             response_data = self._parse_agent_output(network_result.final_output)
             logger.info(f"Final response data: {response_data}")
             
-            # Convert to response model
             response = OutreachResponse(**response_data)
             logger.info(f"Response created successfully: {response}")
             return response
@@ -67,7 +62,6 @@ class OutreachService:
             Dict: Parsed JSON data
         """
         if isinstance(output, str):
-            # Remove markdown code blocks if present
             if output.strip().startswith('```json'):
                 lines = output.strip().split('\n')
                 json_lines = []
@@ -92,5 +86,4 @@ class OutreachService:
         
         return output
 
-# Create service instance
 outreach_service = OutreachService()

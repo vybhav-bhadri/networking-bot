@@ -1,7 +1,6 @@
 import requests
 import json
 
-# Test the API endpoint
 def test_health():
     """Test health endpoint"""
     try:
@@ -22,8 +21,6 @@ def test_agent():
 
 def test_outreach_endpoint():
     url = "http://localhost:8000/outreach"
-    
-    # Simplified test data
     test_data = {
         "platform": "twitter",
         "interaction_stage": "social_reply",
@@ -31,7 +28,6 @@ def test_outreach_endpoint():
         "char_limit": 280,
         "input": "Reply to Alex's thread about cold-start in recommender systems; last tweet asks 'what lightweight tricks have you used?'"
     }
-    
     try:
         response = requests.post(url, json=test_data)
         print(f"Outreach Status Code: {response.status_code}")

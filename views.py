@@ -5,7 +5,6 @@ from services import outreach_service
 
 logger = logging.getLogger(__name__)
 
-# Create router
 router = APIRouter()
 
 @router.get("/")
@@ -40,14 +39,9 @@ async def generate_outreach(user_input: UserInput):
     logger.info(f"Received outreach request: {user_input}")
     
     try:
-        # Convert Pydantic model to dict for service
         user_input_dict = user_input.model_dump()
-        
-        # Call service to generate outreach
         response = await outreach_service.generate_outreach(user_input_dict)
-        
-        return response
-        
+        return response     
     except Exception as e:
         logger.error(f"Error in generate_outreach endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error generating outreach: {str(e)}")
