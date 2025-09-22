@@ -23,14 +23,13 @@ def test_agent():
 def test_outreach_endpoint():
     url = "http://localhost:8000/outreach"
     
-    # Test data
+    # Simplified test data
     test_data = {
         "platform": "twitter",
         "interaction_stage": "social_reply",
         "tone": "casual",
-        "person_name": "Alex",
-        "why": "ask quick follow-up about thread",
-        "context": "Reply to Alex's thread about cold-start in recommender systems; last tweet asks 'what lightweight tricks have you used?'"
+        "char_limit": 280,
+        "input": "Reply to Alex's thread about cold-start in recommender systems; last tweet asks 'what lightweight tricks have you used?'"
     }
     
     try:

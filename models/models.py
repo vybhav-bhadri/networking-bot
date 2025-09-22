@@ -11,6 +11,18 @@ InteractionStage = Literal[
     "social_reply", "social_comment"
 ]
 
+class OutreachRequest(BaseModel):
+    platform: Literal["twitter", "instagram", "linkedin"]
+    interaction_stage: Literal[
+        "first_contact", "follow_up_1", "follow_up_2", "warm_nudge",
+        "post_meeting_thanks", "ask_for_intro", "close_breakup",
+        "social_reply", "social_comment"
+    ]
+    tone: Literal["casual", "professional", "busy"]
+    person_name: Optional[str] = None
+    why: Optional[str] = None
+    context: Optional[str] = None
+
 class NextStep(BaseModel):
     condition: Literal["positive", "neutral", "negative"]
     instruction: str
@@ -29,6 +41,18 @@ class OutreachResponse(BaseModel):
     next_steps: List[NextStep] = []
     safety_checks_passed: bool = True
     reasons_for_denial: Optional[List[str]] = None
+
+class UserInput(BaseModel):
+    """Simplified user input model for API requests"""
+    platform: Literal["twitter", "instagram", "linkedin"]
+    interaction_stage: Literal[
+        "first_contact", "follow_up_1", "follow_up_2", "warm_nudge",
+        "post_meeting_thanks", "ask_for_intro", "close_breakup",
+        "social_reply", "social_comment"
+    ]
+    tone: Literal["casual", "professional", "busy"]
+    char_limit: Optional[int] = None
+    input: str  # The user's requirement/context
 
 def parse_query_string(query_str: str) -> dict:
     try:
